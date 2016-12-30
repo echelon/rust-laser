@@ -14,6 +14,11 @@
   path = "src/lib.rs"
 
 [dependencies]
-  etherdream = "0.0.*"
-  ilda = "0.0.*"
+  # For my own personal development, until etherdream.rs stabilizes.
+  # I'll only test, commit, and release against released versions, though.
+  etherdream = { path = "../etherdream.rs" }
+  #etherdream = "0.0.*"
 
+  # Ditto:
+  ilda = { path = "../ilda.rs" }
+  #ilda = "0.0.*"

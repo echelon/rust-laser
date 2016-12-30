@@ -5,16 +5,17 @@ use laser::ilda;
 use laser::ilda::animation::Animation;
 use laser::etherdream::dac::Dac;
 use laser::etherdream::protocol::Point;
+use laser::etherdream::protocol::COLOR_MAX;
 
 fn main() {
   println!("Reading ILDA file...");
 
   let filename = "./ild/datboi.ild"; // Works
-  let filename = "./ild/cogz99.ild"; // Works (animated)
   let filename = "./ild/font_impact.ild"; // Works
   let filename = "./ild/font_lucida.ild"; // Works
   let filename = "./ild/thunda2.ild"; // Works (animated)
   let filename = "./ild/nyancat.ild"; // Works!! :D
+  let filename = "./ild/cogz99.ild"; // Works (animated)
   //let filename = "./ild/koolaidman.ild"; // TODO: Doesn't render correctly?
 
   let animation = match Animation::read_file(filename) {
@@ -65,8 +66,13 @@ fn main() {
             },
             Some(ref point) => {
               let r = color(point.r);
+              //let r = COLOR_MAX;
               let g = color(point.g);
+              //let g = COLOR_MAX;
               let b = color(point.b);
+              //let b = COLOR_MAX;
+              //if point.is_blank() {
+              //}
               buf.push(Point::xy_rgb(point.x, point.y, r, g, b));
               //buf.push(Point::xy_rgb(point.x, point.y, point.r, point.g, point.b));
               point_index += 1;
@@ -82,5 +88,12 @@ fn main() {
 
 /// Map a single channel of the ILDA color range to the EtherDream color range.
 fn color(color: u8) -> u16 {
-  (color as u16) << 8
+  //(color as u16) << 8
+  let mut color = color as u16;
+  if color > 127 {
+    color = COLOR_MAX;
+  } else {
+    color = 0;
+  }
+  color
 }
