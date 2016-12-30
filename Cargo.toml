@@ -1,0 +1,19 @@
+[package]
+  name = "laser"
+  version = "0.0.1"
+  authors = [ "Brandon Thomas <bt@brand.io>", "Brandon Thomas <echelon@gmail.com>" ]
+  description = "A library for laser projection in Rust."
+  keywords = [ "laser", "projector", "hardware", "ILDA", "DAC" ]
+  license = "BSD-4-Clause"
+  readme = "README.md"
+  repository = "https://github.com/echelon/rust-laser"
+  documentation = "https://docs.rs/laser"
+
+[lib]
+  name = "laser"
+  path = "src/lib.rs"
+
+[dependencies]
+  etherdream = "0.0.*"
+  ilda = "0.0.*"
+
