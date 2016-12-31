@@ -7,15 +7,17 @@ use laser::etherdream::dac::Dac;
 use laser::etherdream::protocol::Point;
 use laser::etherdream::protocol::COLOR_MAX;
 
+static FRAME_REPEAT_COUNT: usize = 1;
+
 fn main() {
   println!("Reading ILDA file...");
 
-  let filename = "./ild/datboi.ild"; // Works
   let filename = "./ild/font_impact.ild"; // Works
   let filename = "./ild/font_lucida.ild"; // Works
-  let filename = "./ild/thunda2.ild"; // Works (animated)
-  let filename = "./ild/nyancat.ild"; // Works!! :D
   let filename = "./ild/cogz99.ild"; // Works (animated)
+  let filename = "./ild/thunda2.ild"; // Works (animated)
+  let filename = "./ild/datboi.ild"; // Works
+  let filename = "./ild/nyancat.ild"; // Works!! :D
   //let filename = "./ild/koolaidman.ild"; // TODO: Doesn't render correctly?
 
   let animation = match Animation::read_file(filename) {
@@ -57,7 +59,7 @@ fn main() {
             None => {
               // NB: Repeat slows the animation speed.
               frame_repeat_count += 1;
-              if frame_repeat_count > 2 {
+              if frame_repeat_count > FRAME_REPEAT_COUNT {
                 frame_index += 1;
                 frame_repeat_count = 0;
               }
@@ -65,16 +67,15 @@ fn main() {
               continue;
             },
             Some(ref point) => {
-              let r = color(point.r);
-              //let r = COLOR_MAX;
-              let g = color(point.g);
-              //let g = COLOR_MAX;
-              let b = color(point.b);
-              //let b = COLOR_MAX;
-              //if point.is_blank() {
-              //}
-              buf.push(Point::xy_rgb(point.x, point.y, r, g, b));
-              //buf.push(Point::xy_rgb(point.x, point.y, point.r, point.g, point.b));
+              let point = if point.is_blank {
+                Point::xy_binary(point.x, point.y, false)
+              } else {
+                let mut r = color(point.r);
+                let mut g = color(point.g);
+                let mut b = color(point.b);
+                Point::xy_rgb(point.x, point.y, r, g, b)
+              };
+              buf.push(point);
               point_index += 1;
             }
           }
@@ -88,12 +89,12 @@ fn main() {
 
 /// Map a single channel of the ILDA color range to the EtherDream color range.
 fn color(color: u8) -> u16 {
-  //(color as u16) << 8
-  let mut color = color as u16;
+  /*let mut color = color as u16;
   if color > 127 {
     color = COLOR_MAX;
   } else {
     color = 0;
   }
-  color
+  color*/
+  (color as u16) << 8
 }
