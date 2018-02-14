@@ -1,10 +1,9 @@
-rust-laser
-==========
+laser demos in rust
+===================
 [![Crate Version](https://img.shields.io/crates/v/laser.svg)](https://crates.io/crates/laser)
 [![Build Status](https://travis-ci.org/echelon/laser.svg?branch=master)](https://travis-ci.org/echelon/laser)
 
-A library for laser projection in Rust. This is a meta package that 
-imports libraries for ILDA, DAC support, and more.
+Various laser demos in Rust. Leverages the **lase.rs** package.
 
 License
 -------

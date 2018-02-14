@@ -1,19 +1,20 @@
 [package]
   name = "laser"
-  version = "0.0.1"
+  version = "0.0.2"
   authors = [ "Brandon Thomas <bt@brand.io>", "Brandon Thomas <echelon@gmail.com>" ]
-  description = "A library for laser projection in Rust."
+  description = "Laser demos for lase.rs"
   keywords = [ "laser", "projector", "hardware", "ILDA", "DAC" ]
   license = "BSD-4-Clause"
   readme = "README.md"
   repository = "https://github.com/echelon/rust-laser"
   documentation = "https://docs.rs/laser"
 
-[lib]
-  name = "laser"
-  path = "src/lib.rs"
+[[bin]]
+  name = "webcam_spiral"
+  path = "src/webcam_spiral.rs"
 
 [dependencies]
-  etherdream = "0.0.*"
-  ilda = "0.0.*"
+  camera_capture = "0.3"
+  image = "0.7"
+  lase = "0.0.2"
 
